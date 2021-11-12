@@ -1,0 +1,692 @@
+FORTINET 6.4
+
+In this lesson, you will learn about FortiGate administration basics and the components within FortiGate that can be enabled to extend functionality. This lesson also includes details about how and where FortiGate fits into your existing network architecture.
+
+Administration methods - GUI or command line
+Login as admin
+Create accounts for other users
+Permissions for each user RW, RO NE, NW
+Override idle timeout-Different for each user
+Vdoms-Segregate admins with different powers
+prof_admin admin type cannot view the password of superuser
+Loggin in-2 methods - One way-Password
+2 way-Password and RSA token from FortiToken sent to mobile
+
+What happens if the password is lost?
+
+Admin should get a snapshot of VM and restore configuration.
+Temporary Account
+Available on local console port and hard reboot
+FortiGate must be physically switched off
+Account Name =Maintainer Account,valid for 60s
+
+Each Admin has a trusted IP
+If admin logs from another device not having the trusted IP, access is blocked
+Deafult trusted IP 0.0.0.0/0 <-Change this 
+
+Override idle timeout-Different for each user
+Override idle session for admin for inactivity session timeout - set using Override 
+Use management protocols such as SSH, HTTPS, PING
+PING exposes FortiGate to DOS attack
+Ability to have both ipv4 and ipv6 - only responds to ipv6 pings
+
+Hiding Features-Does do not disable features
+Configured in Feature Visibility
+
+Provide Aliases to IP Interfaces
+
+A default gateway should be present for the FortiGate, in case FortiGate uses DHCP (Dynamic allocation of IP) or static method
+
+Built-in Servers
+FortiGate can use a DHCP server
+Block MAC from receiving IP addresses
+It can also allow-Assign
+Reserve IP-Bind an IP to a MAC
+
+DNS Server
+
+Useful for FORTINET products using DNS Server-FortiMail
+
+Fortigate answers DNS queries in 3 ways
+Forward-Relay all DNS queries to DNS Server
+Non-recursive-Replies to queries for items in FortiGate's DNS databases and does not forward unresolvable queries. Only uses Fortigate's DNS SErver
+Recursive-                                                                         forwards.Sends unresolved queries to external DNS Servers
+
+DNS database stores IP's for solving DNS queries
+
+Backup configuration-Select backup destination
+Save in either encrypted or non-encrypted(still hashes passwords) methods
+File contains passwords of local and admin users
+Option to secure backup with a password
+Cannot be unlocked without a password and the same FortiGate model and firmware
+
+Configuration File format
+Same firmware and model is required 
+If encrypted- model+firmware+pasword
+unencrypted-model required
+or upgrade model and firmware
+
+Options to upgrade and downgrade features
+
+
+All devices send log reports to FortiGate
+If you serve as FabricRoot, you need to configure FortiAnalyzer IP Address
+By adding the serial number of a device to the trusted list on FortiGate, the device connects and is a part o the Foti Security Fabric
+Authorize the downstream FortiGate device on both root FortiGate and FortiAnalyxer
+
+Once connected all details, messages, service is synced from upstream FortiGate device to downstream Fortigate device
+Device identification processes in FortiGate
+Agent Method--Mac address detection
+HTTP Detection
+TCP Fingerprint
+The non-agent method-Device needs to send network traffic to FortiGate
+
+
+FortiManage-Centralized management of all FortiGate devices
+FortiMail
+FortiWeb
+
+Administrator defined workflows are called stitches
+It is used to respond to events, in networks using if/if-then statements
+Stitches-Allows to monitor network and take appropriate action when Security Fabric detects a threat
+
+Compromised Host trigger can be enabled to automate threat response stitch
+Checks for IOC 
+Remedial Steps:-
+Ban the IP
+Quarantine the affected device
+Only root users can remove banned IP 
+
+External connectors allow you to integrate multi-cloud support such as ACI and AWS, within FortiGate 
+
+
+Security Fabric Status widget
+Blue- Connected to network
+Grey-unauthorized devices connected to the network
+Red-Not detected in the network but are recommended to be added to security fabric
+
+Security Posture Widh=get-Gives rating of the security
+Compare with other industries, organization
+In percentile-Based on region, industry, etc
+Must have valid security rating license
+
+
+Security Rating divided into
+
+Optimization
+Security Posture and 
+Fabric Coverage
+Provides compliance recommendations, performance
+
+Fortigate Firewall Policies
+
+Traffic needs to match the protocol
+ACCEPT/DENY traffic ->According to the firewall policy
+Packets incoming should match with the  source and destination interface, as documented in the policy's interface criteria
+Options to add a single source and destination interface. Options to have many or any interface is disabled on GUI
+Users can be grouped into user groups
+A user needs to be added as part of the source and is granted access, based on the firewall policy
+Authentication Process- Login  Credentials
+ -Users can specify the city, region, etc.
+ISDB objects can be used as destinations in the firewall policy
+Geographical addresses-IP's allocated to a country
+
+Internet Service-Database that contains IP addresses, IP protocols used by common internet services. The database is downloaded periodically
+Can be used as a source or destination, but not as both
+
+Schedules-Add time element to policy
+Perform Backup and other tasks
+Recurring-Everyday
+One Time-Pre specified start and end times
+
+Another way to match policies with packet-Source and destination ports.Not reliable
+
+Configuring Firewall Policies
+Specify unique names for firewall policy. Easier to check.Performed on the command line
+A UUID is generated fr each firewall object or policy
+
+Security Profiles-Inspects each packet
+Flow-based inspection
+Proxy-based inspection
+
+Generate logs for all IP sessions
+One for the start of the session.One for end
+The number of logs decreases performance
+
+Traffic Shapers
+Shared Policy shaping-Bandwidth management f security policies 
+Per IP Shaping-                                 user IP addresses
+Application control shaping
+
+
+IPV4 and IPV6 are mixed into one.No need to maintain logs for both
+For destination and source interfaces, you have to set ipv4 and ipv6 addresses for a policy
+Both should match
+
+Manage and Finetune firewall policies
+
+Policy Usage-Last used, bytes transmitted, UUID, etc
+
+FortiGate automatically assigns a policy ID when creating a new firewall policy on GUI
+
+Simplify=-Group services
+Object called Web-HTTP,HTTPS policies
+FTP group-For FTP policies
+
+Best Practices and Troubleshooting 
+
+Certain characters are not supported while naming policies and passwords
+Use underscores and hyphens for the policy name
+Test policies in a maintenance window, before deployment
+Security policies
+Be careful while editing, adding, or deleting policies
+POLICY ORDER SEQUENCE IS VERY IMPORTANT
+check configuration settings before combining policies
+Policy lookup feature-TO find a matching policy, based on input criteria
+
+Network Address Translation (NAT)
+
+NAT is a process that allows a firewall/more rote to act as an agent between the internet or public network.NAT is used to preserve IP Addresses Done for
+Improved Security, Amplification of Addresses
+NAT and PAT-called NAPT translate internal private IP addresses to external IO addresses.
+For outgoing connections-NAT option is a central SNAT, IP Pool and central SNAT table can be used and  is known as a source NAT
+For incoming connections-Virtual IP'S and DNAT can be used and are known ad destination NAT
+
+NAT64 and NAT 46-Allows ipv6 addressed hosts to communicate with ipv4 addresses hosts
+NAT66-NAT between two ipv6 networks
+
+Firewall policy Nat
+SNAT and DNAT Need to be configured for all policies
+SNAT uses outgoing interface address or configured IP pool
+DNAT-Uses configured VIP as the destination address
+
+Central NAT
+SNAT and DNAT configurations are done as per the virtual domain
+Applies to multiple firewall policies
+SNAT is configured from the central SNAT policy
+DNAT is configured from DNAT and VIP'S
+
+
+Two ways to configure firewall policy SNAT
+Using Outgoing Interface Address
+Using Dynamic IP Pool
+
+Source NAT uses egress interface address when NAT is enabled on the firewall policy
+
+IP Pools define a single IP address /es to be used in a session. Configured in the same range as IP interface
+The IP address in the interface should match with the IP's in the IP pool
+4 types:-
+Overload, One to one-Internal IP address is matched to the external address on a first-come-first-serve basisPAT is not required
+, Fixed port range-Specify internal and external IP range and port block allocation-Type of PAT. External IP range should be specified, along with Block size and Block per user
+
+The larger the IP's in the IP pool, the more the connections that can be established
+Virtual IP'S Are DNAT objects
+The default type is static NAT
+
+By default firewall address objects does not match VIP'S
+Default IP pool type-Overload
+Default VIP type-Static-nat
+
+Central NAT
+Disabled by default
+Enabled only on CLI-
+Mandatory for New Generation Firewall policy type
+A matching SNAT policy is required for all firewall policies
+If matched, SNAT policy is matched on the firewall policy
+If not, the session is opened using the original IP address
+If there is no matching central SNAT policy or central SNAT policy configured-NAT will not be used in the firewall session
+On FortiGate, VIP is selected as the destination address
+As VIP is configured, a rule is created to allow DNAT
+Disabling central NAT
+Outgoing traffic SNAT will no longer be performed
+DNAT and VIP's stop working
+
+Session Helpers
+Help to detect patterns of the same IP addresses on a layer
+Create required secondary sessions and change application headers
+The method used for advanced application tracking and control-Application Layer Gateway
+Example of application layer gateway-VOIP Profile
+
+Session Table-CLI Provides more info for the Session table than GUI
+Gives info about max sessions
+Sessions have TTL. If a process is idle and TTL reaches 0. process is deleted
+Session Table has finite RAM
+Diagnose sys session-Provides options to clear, filter, or show a list of sessions
+system session list command-Get info about sessions
+
+Best Practices and Troubleshooting
+NAT Port Exhaustion-Inability of Fortigate to allocate NAT ports to new sessions
+Remedies:-
+HAVE LARGE IP pOOL WITH at least 1 external IP
+Reduce sessions using NAT
+Double-check start and end IP's of each IP Pool
+Maintainance windows
+
+Firewall Authentication
+
+Verify source IP and device registered on Foregate-Not very secure
+Login Credentials
+Policies are custom for each device
+
+Methods of authentication
+Local Password-Simplest
+Server Based-Stored on POP3, RADIUS, LDAP, and TACACS+ server   Only POP3 requires email domain as login credentials. Others use Login (Password+Username)
+2FA 
+Server Baed-Remote Based Authentication
+Used when the same device needs to be validated by multiple Forti devices
+
+2FA-Login Credentials + Certificate/Token/OTP
+OTP is delivered through SMS and email-User contact details should be present with the user account-Usage of the NTP Server is recommended
+The compromising account is more complex
+
+The passive form of Authentication
+Login is not needed -signs in transparently
+
+Remote Authentication Servers
+
+The LDAP protocol is used to maintain authentication data. A set of defined operations and a request and response network
+The root of LDAP-Domain Component
+Domain Component-DNS Server. Contains:-
+Containers are objects that contain other objects similar to a folder in a file system-Example - country
+Leaves-Objects at end of the branch.example-User ID
+
+Command-diagnose test authserver ldap <servername> <username><password>-To test LDAP Query
+Test before deployment
+
+Radius -Provides auth, author, and accounting
+When a user is authenticating, FortiGate sends an ACCESS-REQUEST packet to the RADIUS server. Reply from server will be:-
+ACCESS-ACCEPT-User credentials are ok
+       REJECT
+ACCESS-CHALLENGE-RADIUS is asking for a secondary password ID or token. This is the reply, if the server uses 2FA
+
+Command                           radius
+
+User groups
+
+Shared Relationship-Same department, organization
+The policy can be specified separately for each group
+4 group types:-
+Firewall
+Guest-Contain temporary accounts. Expire after a predefined amount of time. Used exclusively in wireless networks
+FSSO-Fortinet Single Sign ON
+RSSO-Radius
+
+Authentication using Firewall Policies
+Objects used by firewall policy for authentication
+Local firewall accounts
+External server accounts
+PKI certificate users
+FSSO Servers
+The firewall policy should have a supported protocol. It is required for all types of authentication. Example-HTRP, FTP
+
+3 ways to authenticate active authentication behavior
+
+If you have an active authentication firewall policy, users don't need to authenticate. Uses fall-through policy
+Auth on demand-Traffic won't be allowed until authentication is provided
+
+Authenticate through Captive Portal
+Captive Portal-Web users are authenticated using isername+password
+Used to authenticate all users on a wireless/wired network
+Enabled at the interface level
+You v=can restrict CP to groups or allow for all
+
+You can configure a firewall policy for suppressing captive portals for specific addresses or services. Useful for devices unable to authenticate, such as printers, fax machines.
+When suppressed, traffic matching source or dest is not presented with CP login page
+Can be configured on GUI
+
+Customizing Portal Message-Using HTML
+
+Authentication Timeout
+Idle-No packets generated from host IP
+Hard-Time is of value. The timer starts when the user is authentication and ends when the user logs out
+New session-Timeout if no new sessions are created by the host device
+ 
+Logging and Monitoring
+3 types of logs
+Traffic Logs-Forward-Traffic accepted/rejected according to firewall policy, Local-Contain info about traffic directly to and from FortiGate's management IP addresses. Also contain connections to GUI of FortiGaurd queries and Sniffer-Information related to traffic seen by one arm sniffer 
+Event Logs-Logging administration management events.Subtypes-VPN, WAD,
+Security Logs-Web Filter, User Anomaly. Subtypes are visible in GUI
+
+Logs contain log levels-determine priority 0-ow 6-high
+Logs contain:-
+
+Header- Fields -Date and Time, LOG category, Subtype of Log VDOM
+Body-Hostbname, Action was taken,msg-reason to take action,policy-Traffic matching firewall policy
+
+Best Practices
+Log activities required
+logging activity matches network requirements
+Have a backup logging plan
+
+Local Logging-Storing logs on FortiGate hard drives
+Logging to FortiGate hard drives-Called disk logging. It contains traffic and logs archives
+75% of disk space is available to store logs
+If the disk is full-Older logs are overwritten
+First warning-75% Second-90% Third-95%
+
+Remote Logging-Uses Syslog servers such as FortiCloud, FortiAnalyzer
+
+Uploading Options of Logs 
+Real-Time
+Every minute
+Every 5 minute
+If FortiAnalyzer becomes unavailable to FortiGate, it uses the process to cache logs. Cached logs are sent to FortiAnalyzer
+There is a maximum size to cache size
+Local Traffic generates a huge load of logs
+
+Reliable logging-Uses UDP 514 or TCP 514 port on FortiGate
+
+Log Settings
+Filtering-According to severity level, user traffic, namely traffic - Config in Command Line
+
+Hide user names -Names appear as anonymous 
+
+Log Backups-From database to a location
+Using FTP, TFTP or USB -Stored in LZ4 formate
+Backed up logs cannot be uploaded to another FortiGate device
+
+Log Rolls-Lower space requirements
+
+Why are certificates used by FortiGate?
+Inspection
+Privacy
+Authentication
+Provided by Certifying Authority
+The certificate contains Subject and Subject Name=To distinguish certificates over each other
+Standard Supported-X 509v3
+
+Trust Tests  for Certificates
+Check Revocation Lists-Check if cert has been revoked
+Online Cert Status Protocol-
+Check if the valid date and expiry date are between the current date
+
+Digital Signature is generated for Certs
+
+Certificate-based user auth uses an end entity cert to identify the user. Also uses the user's public key and signature of CA.
+
+
+Use of SSL certificate by FortiGate-Not trusted by CA
+Provides:-
+Privacy of data
+Identifies one or more users
+Uses asymmetric and symmetric cryptography
+
+Inspect Encrypted Data
+
+No SSL Inspection-Viruses get around encrypted traffic
+Certificate inspection-used to verify the identity of the webserver and ensure HTTPS protocol isn't used as a workaround to access sites you have blocked using web filtering
+Featured to be applied using SSL Certificate Inspection-Web Filtering
+
+TO perform full SSL Inspection, FortiGate must act as a CA
+certificate issued by FortiGate should have a destination domain name-www.ex.ca
+
+If multiple users are connecting to multiple servers and if the SSL cert is not trusted:=
+Allow-Sends a trusted temp cert
+Block
+Ignore
+
+Excepting sites from SSL inspection
+For legal reasons
+Because of traffic problems-Sites using HTTP public key pinning
+Except them based on category(financial,healthcare),address
+
+Invalid Certificate
+Expired
+Revoked
+Validation Timeout
+Validation Failed
+
+If cert is invalid-either allowed, ignore, or block
+Fortigate perform Cert chain validation based on CA Cert
+
+We have the option to perform SSH deep scan on Multiple clients connecting to multi servers
+SSH deep scans run on port 22-Proxy based scan
+
+When doing a gull SSL inspection using FortiGate self-signed CA, the browser displays a message depicting a warning. Because it does not or trust the CA issuing the cert
+To prevent this
+Download Fortinet CA_SSL Cert
+Use SSL cert issued by CA and install in necessary browsers
+Ensure root CA is installed on browser/systems
+
+Extension and value for cert validation cA=True
+
+Ways to prevent MITM
+HSTS-Strict transport security
+HPKP-Public key pinning-Pins a public key to a specific browser
+
+CSR-Cert signing request - Performed by file-based or Online SCEP method
+Fortigate geenratues CSR
+CSR is sign
+
+SSL Cert issued by Private CA must be installed at endpoints
+
+
+Web Filtering
+
+Inspection Modes
+
+Flow-COvers flow-based profiles
+Faster scanning
+Less resource required
+Uses single direct filter approach pattern matching to identify and detect threats
+Tools used by Proxy isn't available here
+Proxy-More secure, allow both inspection modes security profiles, covers more profiles
+Thorough inspection
+More resources
+Less false positives
+
+Next-Generation Firewall policy-based modes
+Profile based-Requires admins to create and use application control and web filter profiles and add them to the firewall. Applies to both flow and proxy
+Policy-based-                                                                                               security policy
+Applies only to the flow-based mode
+Default-Flow 
+
+FFortigAUrd Category Filter-Checks website category-Uses human resources and crawlers
+Requires active contract
+2 days grace period if not renewed
+Elserating error will be given at all instances
+
+Warning page before accessing a website-Interval to display message can be configured
+
+Threat Feeds-Allows FG to dynamically import external block lists from  HTTP server-Contains cleartext URLs that should be blocked
+
+Web Rating Override-Only allows URL's no wildcard characters
+
+URL Filtering-Checks against entered websites in the list
+Allow
+Ignore
+Block
+Exempt
+
+Contact FG for a better website rating or if not rated yet
+
+Additional Proxy-based web filtering
+
+Forti Quotas-Time to access categories that are set to monitor, warn or authenticate in web filter profile
+Set a quota for users spending time on websites, based on category
+Can be configured separately for each website
+Resets after every midnight
+
+File Filter-Inspects files traversing over HTTP and FTP protocols. Either allow or block or both
+
+Web Profile Overrides-Applies to a user, user group, or Source IP. An override auth needs to be provided
+
+Safe Search-Filter search results
+Restrict Youtube Access
+Web Content Filtering-Either exempt or block
+Add characters, wildcards, or phrases to prevent websites from loading up these words
+Max patterns that can be set-5000
+Requires full deep SSL Scan, as FG needs to check packet headers
+
+DNS Filtering
+Lightweight
+Lacks features offer by HTTTP Filtering
+DNS is in cleartext
+
+Allow, Redirect to Block Portal, Monitor
+
+Application Control
+Detects applications on a network
+Check which takes up a lot of bandwidth
+Either monitor, block or apply traffic shaping
+Applications can use a different standard protocol
+Uses IPS Engine
+Report packets, with a predefined pattern of traffic/packet
+Used Flow-based scan-Not applied by a proxy
+
+Detecting Peer 2 peer apps
+Hard to detect
+Able to evade firewalls
+Changing ports randomization
+Changing encryption patterns
+
+P2P Downloads
+One client
+Many servers (n)
+Dynamic ports
+Files are delivered 'n' times faster
+Hard to block with traditional firewalls
+A single peer can consume large amounts of bandwidth
+
+Application Control Profile-Uses Flow-based scanning
+3 filters:-
+CategorieS-Similar apps are grouped, view app control signatures, configure settings, actions
+Application Overrides-Configure actions for specific signatures or apps
+Filter overrides-
+Must be applied to a firewall policy/
+
+Filter actions:_
+Accept
+Block
+Monitor
+Quarantine
+If not sure-Select Monitor
+
+NGFW Policy Mode
+Available in Flow-based mode
+Must specify SSH and SSL Security profile
+ACCEPT or DENY actions for traffic- based on app control, groups policy
+URL filter-Apps you add to policy should be a browser-based category
+Apply antivirus and IPS security profiles to Accept
+
+3 step process for NGFW Policy-based app filtering
+1)AFortiOS will allow all traffic while forwarding packets to the IPS engine for inspection and identification of traffic.FortiOS creates an entry in the session table allowing traffic to pass and adds a may__dirty flag to it
+2)As soon as the IPS engine identifies the app, it updates the session entry with the following information-dirty flag,ap_valid flag, and app id
+3)Forti OS kernel performs a security policy lookup again to see if the identified app id is listed in any of the existing
+security policies. This time the kernel uses both Layer 4 and 7 information for policy matching. After the criteria match the firewall policy rule, the FortiOS kernel applies the action configured on the security policy to the app traffic
+
+Use rate limit to limit the bandwidth used by apps
+
+Antivirus detection methods-MD5,CRRC,File Atrributes
+Virus ology <vector>/<patern>
+Antivirus Scanning Techniques
+
+Antivirus Scanning-Can uses flow-based or proxy-based mode. Antivirus has two types of databases-extreme and extended. More optimized
+Both modes use extended or extreme depending on CLI settings and IPS engine.
+Flow based-Uses hybrid of scanning modes-legacy and default.IPS engine reads the payload of each packet, caches a local copy, and forwards it to the receiver. Consumes more PC Cycles than a proxy. When the receiver receives the last packet of the file, puts the packet on hold and sends a copy to the IPS engine.IPS enf=gine then extracts the payload and assembles the whole file and sends the file to the AntiVirus engine for scanning
+
+Two courses of action:-
+If a virus is detected, the last packet is dropped and the connection is reset
+If an identical request is made, the block replacement is inserted immediately
+
+Proxy inspection mode-Each protocol's proxy picks a connection, buffers the entire file, before scanning. If a virus is detected, a block replacement mage is displayed. Long time to scan
+
+Two types of additional AV scanning modes-MAPI and CDR
+Files bigger than buffer size are not scanned
+More configurable
+
+Default mode enhances scanning of nested archive files, without buffering container archive file
+Legacy mode-Buffers full container and scans it
+Greyware Scanning-Software installed without the user's knowledge. Can have side effects and is not exactly a virus
+Heuristic-Raise probability of a virus.More false positive.Can find zero-day vuln.Can be enabled on CLI.Uses more resources
+Two actions for heuristic scanning
+pass-Detected files will be passed by FG and record an event log
+block-                      blocked
+Order of scanning=AV, GS, and HS
+A more certain way for detection-Sandbox.
+Less false positives
+Less usage of resources
+
+Content Disarm and Reconstruction-Removes exploitable content and replaces it with content, known to be safe.
+The recipient is not at risk
+CDR supported protocols-POP3,SMTP,HTTP
+After replacement, traffic flows as usual
+
+Virus Outbreak Prevention-Quick virus outbreaks can infect a network before signatures can be developed to stop them. Outbreak protection stops these virus outbreaks before signatures become available on FG
+
+FG uses hash-based detection for new threats, not yet detected by antivirus signatures.
+Scanned by scan unit daemon
+
+Malware block list
+Hosted on the webserver
+Accessible by HTTP, POP3
+May contain MD5, SHA256 hashes
+
+Intrusion Prevention and DOS
+
+Difference between Anomaly and Exploit
+Exploit-Attack with a known pattern.Matched by IPS, WAF
+Anomaly-Unusual behavior.Example-High CPU Usage. Detected and mitigated. Detected by behavior analysis such as DOS Analysis, rated based IPS Signatures
+
+IPS on FG, use signature databases to detect know attacks
+Web Filtering
+
+Hoe?
+Decoders arse each packet, according to port spec.
+
+FG IPS service updates the signatures.IPS Signatures are updated on FG, to stay alert against the new exploit. Updation is crucial
+
+IPS Sig database id divided into:-
+
+Regular-Causes rare or no false positives.Smaller database.Default action->block detected  attack
+Extended-Contains several sig for attacks that cause significant performance impact or do not support blocking due to its nature.Not present in regular FG devices, due to its; large size
+
+Monitor feature of IPS-Allows traffic and logs activity
+
+DOS
+
+Attacks that exploit asymmetric processing or bandwidth between clients and servers
+To block a DOS attack-Apply DOS policy on devices
+
+Types of DOS Attacks
+1)TCP SYN -Same method for TCP scan
+Malicious clients continue to send more SYN Packets, half opening more connections, until the server's connection table becomes full. It can no longer accept new clients
+
+2)ICMP Sweep-We know  ICMP MITM
+
+3)TCP port scan
+
+4)Distributed DOS-Botnet
+
+4 types of anomaly detection protocol
+Flood sensor-Detctes high volume of specific protocol or signal in protocol
+Sweep Scan-Probe by Port Scan
+Source Sig-Checks for a large volume of traffic originating from single IP
+Destination Sig-Look for large volumes destined for single IP
+At first attempt of setting DOS-Set it to log, not block.Since blocking can block all devices on the network
+
+WAF
+Attractive to attackers
+WAF protects a server
+A server receives requests from clients
+Only available in proxy inspection mode
+Example-XSS, SQL Injection
+
+SSL VPN
+Easy way to give remote users access to your network
+
+Two modes to access SSL-VPN
+1)Tunnel-Supports more protocols
+Requires installation of VPN Client/Adapter. You need a BPN only client
+Connect to FG, using FortiClietnt
+Any IP network app running on a client can send traffic through the tunnel
+VPN SOftware client needs admin privileges. More software
+Connect to SSLVPN through SSL-VPN client
+Provide credentials
+
+Also supports split tunneling
+If enabled-Egress firewall policy is required
+Reduces bottlenecks
+
+
+2)Web mode-Only requires a browser and supports a few protocols
