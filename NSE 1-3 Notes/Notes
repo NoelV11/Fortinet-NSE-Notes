@@ -1,0 +1,100 @@
+PII-Personal Identifiable Information
+Botnets are set up using a Command and Control line
+PASSWORD MANAGER-GENERATES RANDOM PASSWORDS
+DO NOT USE THE SAME PASSWORD FOR ALL ACCOUNTS
+
+Internet Threat Perspectives:-
+Juice Jacking-MMalware installed to charging device, at public charge points, in public areas. 
+
+Physical Security Awareness
+Shoulder surfing-Watching passwords being entered over your shoulder
+Follow company guidelines
+Shred papers containing sensitive information
+
+Cloud Security
+
+Offers unlimited space
+Allows organizations to run their services and applications on them
+Virtualization-Ability for a master server, to distribute work to other servers connected to it, thus utilizing resources and reducing costs.
+
+Types of clouds:-
+IaaS=Infrastucture as a service-Service of renting out computer hardware, for organizations to run their applications and services in a virtualized manner
+SaaS-Providing servers which allow running of applications, with managed services.
+Provides Database Management
+Complete application environment
+
+Cloud vendor is responsible for ensuring the security of server infrastructure,but
+Organization that installs the virtualization app on the server is responsible for securing access, network traffic, and data applications
+Tools used by vendors and organizations, for security are the same.
+Hybrid or multi cloud-Multiple servers, working over different vendors server architecture, with virtualized applications installed on it, by an organization, renting these
+
+SD-WAN (Softtware Driven -Wide ..)
+Optimal Application Performance
+Reduced Costs
+Consists of WAN Links, to connect services. If one link provides very little latency, the SD-WAN chooses another WAN link
+Single Security Appliance
+Led from use of a physical appliance to a virtual appliance providing security and reliability
+It removed problems such as:-
+Vendor services not integrating with organization services and other services
+Handling of wiring by unqualified workers
+
+Polymorphic Malware-A file of many malware, performing malicious activity
+Signature-based malware cannot prevent this  ->Signature updates for the virus is done annually, monthly or quarterly ->Not effective
+Security Antivirus has now specific signature to the polymorphic file
+Heuristic Detection-Place the suspect file(containing malware), in a sandbox. Its actions are observed. If it shows suspect activity, it is flagged as malware. You can find new polymorphic types of malware
+The news is then propagated to other security firms' threat intel service  -->Better than virus signature updates for each virus
+Sandboxing is better than virus signature updates 
+
+Security Orchestration and Automation
+Increases efficiency
+Reduces workloads
+Automates manual processes 
+Helps out in incident response
+Uses a playbook (flow chart for the process to be performed)4
+Blocks traffic from suspect IP'S
+Phishing
+Helps in the mitigation process, once an incident response is performed and information is gained
+Teams can set alerts, on SOAR, for other teams. Eg - Once emails are determined to be phished, it sends alerts to analysts, alerting them of these phishing emails and taking action. Uses a phishing playbook.
+Sending mails to other teams, reporting the action taken by SOAR
+
+NAC-Network Access Control
+Virtual Machine, controlling access to a network
+NAC follows 802.xx IEEE standard
+Consists of 3 parties- device wanting to connect, authenticator, the authentication server
+Either block or provide access
+NAC now covers guest access, BYOD, and IoT devices
+IOT lack CPU space to cover securing software and other security tools
+When MIS (Management Information Systems) introduces NAC, to a network, the following steps occur:-
+NAC creates profiles for each device connected to the network
+According to the profile, NAC allocates resources
+Based on the profile, NAC provides access to the related server. Eg) Bank PC to Bank System Server
+Complete visibility of networks
+
+Sandbox-An environment, where processes are run, to check for malicious activities
+Effective for zero-days vulnerability 
+Sandbox contains OS, computer components etc, mimicking a computer, in a virtual environment
+Failed to integrate with other devices on the network
+Quarantines the zero-day vulnerability
+If it finds something, the sandbox is affected, not the other components
+Sandbox did not share threat intelligence information with other devices on network-time consuming
+
+Second generation Sandbox devices
+Shares threat intel data among devices(firewalls etc)
+
+MITRE -Proposes ATT&CK Framework
+Security devices implemented the framework
+Shares security data with vendors, devices 
+
+Security Information and Event Management
+Analyzes security alerts in real-time, from servers, databases, virtual appliances, etc to a centralized environment
+Run analytical tests on data collected->wateches out for IOC
+Checks out user anomaly behavior
+Uses ML
+
+Disadvantage:-
+Integration was tough
+Regulatory Compliance -<Healthcare firms, bank firms not complying with HIPPA and PCI-DSS can be targets of attacks
+
+     		Web Application Firewalls
+WAF monitors HTTP protocol applications and websites
+Next-generation WAF characteristics- Data Loss Prevention, DDOS Attacks, and IP Reputation
